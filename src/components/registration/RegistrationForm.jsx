@@ -117,7 +117,7 @@ const submitForm =(data) =>{
 								</button>
 							
 
-								<>
+								{/* <> */}
 
 {/* <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
 	<div onClick={() => setShowModal(false)}>
@@ -130,7 +130,7 @@ const submitForm =(data) =>{
 	</ModalBody>
 	
 </Modal> */}
-</>
+{/* // </> */}
 							
 							
 							
