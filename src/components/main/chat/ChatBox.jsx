@@ -83,10 +83,7 @@ export default function ChatBox(props){
         </router-link>
         <div className="my-3 text-gray-200 font-bold text-lg tracking-wide">{data?data['receiver_email']:""}</div>
         {/* <!-- 3 dots --> */}
-        <DropdownMenu 
-         usersList={props.usersList}
-        headers ={headers}
-        receiveData={receiveData} />
+        
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
