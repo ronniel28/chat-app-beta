@@ -1,46 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import{ yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import NotificationModal from '../tools/NotificationModal';
-import Modal from "@material-tailwind/react/Modal";
-import ModalHeader from "@material-tailwind/react/ModalHeader";
-import ModalBody from "@material-tailwind/react/ModalBody";
-import ModalFooter from "@material-tailwind/react/ModalFooter";
-import Button from "@material-tailwind/react/Button";
-import { AccordionButton } from 'react-bootstrap';
 
 const schema=yup.object().shape({
     email: yup.string().email().required() ,
-    password: yup.string().min(6).max(15).required() ,
+    password: yup.string().min(4).max(15).required() ,
     password_confirmation: yup.string().oneOf([yup.ref("password"), null])
 })
 
 
 export default function RegistrationForm(props){
-	const [showModal, setShowModal] =useState(false);
-	const [notif, setNotif]= useState([])
-    const {register, handleSubmit, reset, formState:{errors}}= useForm({
+
+    const {register, handleSubmit, formState:{errors}}= useForm({
         resolver: yupResolver(schema),
     });
 const submitForm =(data) =>{
     axios.post("https://slackapi.avionschool.com/api/v1/auth/",data)
     .then((response)=>{
         console.log(response)
-		setNotif(["Successfully Created Account. Go to Log In Page"])
     })
 	.catch((error)=>{
-		console.log(error.response.data.errors['full_messages'])
-		setNotif(error.response.data.errors['full_messages'])
-	
-	})
-	setShowModal(true);
-	reset({
-		email:"",
-		password:"",
-		password_confirmation:""
+		console.log(error)
 	})
 };
     return (
@@ -72,9 +55,9 @@ const submitForm =(data) =>{
                                      {...register("email")} 
                                     name="email"
 									className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-									id="name"
-									type="name"
-									placeholder="Channel Name"
+									id="email"
+									type="email"
+									placeholder="Email"
 								/>
                                
                                 <p>{errors.email?.message}</p>
@@ -115,25 +98,6 @@ const submitForm =(data) =>{
 								>
 									Register Account
 								</button>
-							
-
-								<>
-
-<Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
-	<div onClick={() => setShowModal(false)}>
-		Attention!
-	</div>
-	<ModalBody>
-		{notif && notif.map(notif=>{
-			return <p>{notif}</p>
-		})}
-	</ModalBody>
-	
-</Modal>
-</>
-							
-							
-							
 							</div>
 							<hr className="mb-6 border-t" />
 							<div className="text-center">
